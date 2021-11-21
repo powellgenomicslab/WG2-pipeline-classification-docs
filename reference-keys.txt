@@ -1,0 +1,13 @@
+about
+general
+getting-started
+downloading-singularity-image
+cell-type-classification-workflow
+singularity-image-components
+split-data
+azimuth-classification
+parallelize-classification-sge-example
+hierarchical-scpred-classification
+parallelize-classification-sge-example-1
+merge-data
+compare-classifications

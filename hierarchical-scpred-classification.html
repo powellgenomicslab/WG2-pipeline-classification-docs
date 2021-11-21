@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Hierarchical scPred classification | WG2: Cell-type classification</title>
+<meta name="author" content="Jose Alquicira Hernandez and Lieke Michelsen">
+<meta name="description" content="Cell type classification using the Hierarchical scPred method can be performed using the map_hierscpred.R module.. Let’s create an output directory to store the results. mkdir step3_hierscpred And...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Hierarchical scPred classification | WG2: Cell-type classification">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs/hierarchical-scpred-classification.html">
+<meta property="og:description" content="Cell type classification using the Hierarchical scPred method can be performed using the map_hierscpred.R module.. Let’s create an output directory to store the results. mkdir step3_hierscpred And...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Hierarchical scPred classification | WG2: Cell-type classification">
+<meta name="twitter:description" content="Cell type classification using the Hierarchical scPred method can be performed using the map_hierscpred.R module.. Let’s create an output directory to store the results. mkdir step3_hierscpred And...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">WG2: Cell-type classification</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="" href="general.html"><span class="header-section-number">2</span> General</a></li>
+<li><a class="" href="getting-started.html"><span class="header-section-number">3</span> Getting started</a></li>
+<li><a class="" href="split-data.html"><span class="header-section-number">4</span> Split data</a></li>
+<li><a class="" href="azimuth-classification.html"><span class="header-section-number">5</span> Azimuth classification</a></li>
+<li><a class="active" href="hierarchical-scpred-classification.html"><span class="header-section-number">6</span> Hierarchical scPred classification</a></li>
+<li><a class="" href="merge-data.html"><span class="header-section-number">7</span> Merge data</a></li>
+<li><a class="" href="compare-classifications.html"><span class="header-section-number">8</span> Compare classifications</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="hierarchical-scpred-classification" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Hierarchical scPred classification<a class="anchor" aria-label="anchor" href="#hierarchical-scpred-classification"><i class="fas fa-link"></i></a>
+</h1>
+<p>Cell type classification using the <strong>Hierarchical scPred</strong> method can be performed using the
+<code>map_hierscpred.R</code> module..</p>
+<p>Let’s create an output directory to store the results.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="hierarchical-scpred-classification.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> step3_hierscpred</span></code></pre></div>
+<p>And check the input arguments</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="hierarchical-scpred-classification.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
+<span id="cb14-2"><a href="hierarchical-scpred-classification.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> map_hierscpred.R <span class="at">--help</span></span></code></pre></div>
+<pre><code>Usage: map_hierscpred.R [options]
+
+
+Options:
+        --file=CHARACTER
+                RDS object file name
+
+        --batch=CHARACTER
+                Batch column. If provided, each group in from the batch columns is mapped to reference independently
+
+        --thr=CHARACTER
+                Threshold for rejection. By default no rejection is implemented
+
+        --iter=CHARACTER
+                Maximum number or Harmony iterations
+
+        --plan=CHARACTER
+                Strategy to resolve future [default= sequential]:
+                multisession
+                multicore
+                cluster
+                remote
+                transparent
+
+        --workers=NUMERIC
+                Number of workers used for parallelization
+                [default= 1]
+
+        --mem=NUMERIC
+                Maximum allowed total size (in GB) of global variables identified
+                [default= Inf]
+
+        --out=CHARACTER
+                Output file name [default= hier_scpred]
+
+        --path=CHARACTER
+                Output path to store results [default= .]
+
+        -h, --help
+                Show this help message and exit</code></pre>
+<p>Further data splitting and classification can be performed within <code>map_hierscpred.R</code>
+via the <code>future</code> package, however, we’ll classify cells for each of the partitions
+we already created.</p>
+<p>Let’s assume we have already classified cells using the <em>azimuth</em> approach. We can
+use the output Seurat <code>.RDS</code> files as as input for <em>hierchical scPred</em> as follows:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="hierarchical-scpred-classification.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">$(</span><span class="fu">ls</span> step2_azimuth <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">)</span><span class="kw">;</span></span>
+<span id="cb16-2"><a href="hierarchical-scpred-classification.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb16-3"><a href="hierarchical-scpred-classification.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">out=$(</span><span class="bu">echo</span> <span class="va">$i</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'gsub(".RDS", "")'</span><span class="va">)</span></span>
+<span id="cb16-4"><a href="hierarchical-scpred-classification.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> map_hierscpred.R <span class="at">--file</span> step2_azimuth/<span class="va">${i}</span> <span class="at">--path</span> step3_hierscpred <span class="at">--out</span> <span class="va">${out}</span></span>
+<span id="cb16-5"><a href="hierarchical-scpred-classification.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p>Similar to <code>map_azimuth.R</code>, <code>map_hierscpred.R</code> will return a Seurat object
+including:</p>
+<ul>
+<li>Cell type classification (<code>scpred_prediction</code>) as a column in the metadata</li>
+</ul>
+<div id="parallelize-classification-sge-example-1" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> Parallelize classification: SGE example<a class="anchor" aria-label="anchor" href="#parallelize-classification-sge-example-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>The following array job code in SGE (Sun Grid Engine) can be used as a guide to
+classify each pool in individual jobs. This code snippet was used to
+classify multiple Seurat objects (75 pools) from the OneK1K dataset.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="hierarchical-scpred-classification.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -N clasify_cells</span></span>
+<span id="cb17-2"><a href="hierarchical-scpred-classification.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -q short.q</span></span>
+<span id="cb17-3"><a href="hierarchical-scpred-classification.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -l mem_requested=50G</span></span>
+<span id="cb17-4"><a href="hierarchical-scpred-classification.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -S /bin/bash</span></span>
+<span id="cb17-5"><a href="hierarchical-scpred-classification.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -r yes</span></span>
+<span id="cb17-6"><a href="hierarchical-scpred-classification.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -cwd </span></span>
+<span id="cb17-7"><a href="hierarchical-scpred-classification.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -o results/2021-11-19_hier_scpred</span></span>
+<span id="cb17-8"><a href="hierarchical-scpred-classification.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#$ -e results/2021-11-19_hier_scpred</span></span>
+<span id="cb17-9"><a href="hierarchical-scpred-classification.html#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="hierarchical-scpred-classification.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># mkdir results/2021-11-19_hier_scpred</span></span>
+<span id="cb17-11"><a href="hierarchical-scpred-classification.html#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="hierarchical-scpred-classification.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$SGE_O_WORKDIR</span></span>
+<span id="cb17-13"><a href="hierarchical-scpred-classification.html#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="hierarchical-scpred-classification.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Set environmental variables</span></span>
+<span id="cb17-15"><a href="hierarchical-scpred-classification.html#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="va">input=</span>results/2021-10-28_pools</span>
+<span id="cb17-16"><a href="hierarchical-scpred-classification.html#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="va">output=</span>results/2021-11-19_hier_scpred</span>
+<span id="cb17-17"><a href="hierarchical-scpred-classification.html#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="hierarchical-scpred-classification.html#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Get job info</span></span>
+<span id="cb17-19"><a href="hierarchical-scpred-classification.html#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"JOB: </span><span class="va">$JOB_ID</span><span class="st"> TASK: </span><span class="va">$SGE_TASK_ID</span><span class="st"> HOSTNAME: </span><span class="va">$HOSTNAME</span><span class="st">"</span></span>
+<span id="cb17-20"><a href="hierarchical-scpred-classification.html#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="hierarchical-scpred-classification.html#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basefile name</span></span>
+<span id="cb17-22"><a href="hierarchical-scpred-classification.html#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="va">files=($(</span><span class="fu">ls</span> <span class="va">${input}</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">))</span></span>
+<span id="cb17-23"><a href="hierarchical-scpred-classification.html#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="va">i=</span><span class="st">"</span><span class="va">$(($SGE_TASK_ID</span><span class="op">-</span><span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
+<span id="cb17-24"><a href="hierarchical-scpred-classification.html#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="hierarchical-scpred-classification.html#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="va">filename=${files</span><span class="op">[</span><span class="va">$i</span><span class="op">]</span><span class="va">}</span></span>
+<span id="cb17-26"><a href="hierarchical-scpred-classification.html#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="va">filename=$(</span><span class="bu">echo</span> <span class="va">$filename</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/.RDS//'</span><span class="va">)</span></span>
+<span id="cb17-27"><a href="hierarchical-scpred-classification.html#cb17-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-28"><a href="hierarchical-scpred-classification.html#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Running for: </span><span class="va">$filename</span><span class="st">"</span></span>
+<span id="cb17-29"><a href="hierarchical-scpred-classification.html#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="hierarchical-scpred-classification.html#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Run main command</span></span>
+<span id="cb17-31"><a href="hierarchical-scpred-classification.html#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$SGE_O_WORKDIR</span> bin/cell_classification.sif <span class="dt">\</span></span>
+<span id="cb17-32"><a href="hierarchical-scpred-classification.html#cb17-32" aria-hidden="true" tabindex="-1"></a>  Rscript /map_hierscpred.R <span class="dt">\</span></span>
+<span id="cb17-33"><a href="hierarchical-scpred-classification.html#cb17-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> <span class="va">${input}</span>/<span class="va">${filename}</span>.RDS <span class="dt">\</span></span>
+<span id="cb17-34"><a href="hierarchical-scpred-classification.html#cb17-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${filename}</span>_out</span>
+<span id="cb17-35"><a href="hierarchical-scpred-classification.html#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="ex">--path</span> <span class="va">${output}</span></span></code></pre></div>
+<p>If we save the previous code into a file (e.g. <code>run_hierscpred.sh</code>), we can launch
+an array job iterating for each pool name</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="hierarchical-scpred-classification.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qsub</span> <span class="at">-t</span> 1-75 bin/run_hierscpred.sh</span>
+<span id="cb18-2"><a href="hierarchical-scpred-classification.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -t Vector of length equal to the number of pools (.RDS files)</span></span></code></pre></div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="azimuth-classification.html"><span class="header-section-number">5</span> Azimuth classification</a></div>
+<div class="next"><a href="merge-data.html"><span class="header-section-number">7</span> Merge data</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#hierarchical-scpred-classification"><span class="header-section-number">6</span> Hierarchical scPred classification</a></li>
+<li><a class="nav-link" href="#parallelize-classification-sge-example-1"><span class="header-section-number">6.1</span> Parallelize classification: SGE example</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs/blob/master/06-hier_scpred.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs/edit/master/06-hier_scpred.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

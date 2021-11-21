@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Getting started | WG2: Cell-type classification</title>
+<meta name="author" content="Jose Alquicira Hernandez and Lieke Michelsen">
+<meta name="description" content="3.1 Downloading singularity image All core scripts and data necessary to perform cell-type classification are available in a singularity container from: Link to dropbox  3.2 Cell type...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Getting started | WG2: Cell-type classification">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs/getting-started.html">
+<meta property="og:description" content="3.1 Downloading singularity image All core scripts and data necessary to perform cell-type classification are available in a singularity container from: Link to dropbox  3.2 Cell type...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Getting started | WG2: Cell-type classification">
+<meta name="twitter:description" content="3.1 Downloading singularity image All core scripts and data necessary to perform cell-type classification are available in a singularity container from: Link to dropbox  3.2 Cell type...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="bs4_style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">WG2: Cell-type classification</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> About</a></li>
+<li><a class="" href="general.html"><span class="header-section-number">2</span> General</a></li>
+<li><a class="active" href="getting-started.html"><span class="header-section-number">3</span> Getting started</a></li>
+<li><a class="" href="split-data.html"><span class="header-section-number">4</span> Split data</a></li>
+<li><a class="" href="azimuth-classification.html"><span class="header-section-number">5</span> Azimuth classification</a></li>
+<li><a class="" href="hierarchical-scpred-classification.html"><span class="header-section-number">6</span> Hierarchical scPred classification</a></li>
+<li><a class="" href="merge-data.html"><span class="header-section-number">7</span> Merge data</a></li>
+<li><a class="" href="compare-classifications.html"><span class="header-section-number">8</span> Compare classifications</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="getting-started" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Getting started<a class="anchor" aria-label="anchor" href="#getting-started"><i class="fas fa-link"></i></a>
+</h1>
+<div id="downloading-singularity-image" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Downloading singularity image<a class="anchor" aria-label="anchor" href="#downloading-singularity-image"><i class="fas fa-link"></i></a>
+</h2>
+<p>All core scripts and data necessary to perform cell-type classification are
+available in a singularity container from:</p>
+<p>Link to dropbox</p>
+</div>
+<div id="cell-type-classification-workflow" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Cell type classification workflow<a class="anchor" aria-label="anchor" href="#cell-type-classification-workflow"><i class="fas fa-link"></i></a>
+</h2>
+<p>The algorithm to perform cell type classification follows a split-map-reduce approach.
+If multiple experimental units are contained in the same Seurat object (e.g. pool, batch,
+dataset), the data is first split into multiple objects. Cell type classification
+is performed individually in each batch and finally results are aggregated into a
+single Seurat object. The figure below shows a general description of the process:</p>
+<div class="figure">
+<img src="_bookdown_files/wg2-cell_classification.png" style="width:100.0%" alt=""><p class="caption">Overview of cell type classification process</p>
+</div>
+<p>The description of each R script included in the previous figure is included in the
+next section.</p>
+</div>
+<div id="singularity-image-components" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Singularity image components<a class="anchor" aria-label="anchor" href="#singularity-image-components"><i class="fas fa-link"></i></a>
+</h2>
+<p>The singularity image <code>cell_classification.sif</code> contains the following scripts:</p>
+<ul>
+<li>
+<code>split_object.R</code>: Splits a <code>Seurat</code> data object into multiple objects according to
+the levels in a column from the metadata,</li>
+<li>
+<code>azimuth.R</code>: Performs cell type classification using the azimuth approach</li>
+<li>
+<code>hier_scpred.R</code>: Applied hierarchical <code>scPred</code> to classify cells</li>
+<li>
+<code>reduce.R</code>: If the initial data was split, this script aggregates all
+results into a single Seurat object</li>
+<li>
+<code>compare_results.R</code>: If both azimuth and hierarchical scPred were run, this
+script creates a heatmap and a long-format contingency matrix containing the
+classification concordance between the two methods.</li>
+</ul>
+<p>All previous scripts share the following parameters:</p>
+<ul>
+<li>
+<code>--file</code>: Input RDS object or directory</li>
+<li>
+<code>--out</code>: Base filename for output files</li>
+<li>
+<code>--path</code>: Output directory to store results. If not specified, the
+current directory will be used to store the output(s)</li>
+</ul>
+<p>The image contains the following reference files:</p>
+<ul>
+<li>
+<code>pbmc_multimodal.h5seurat</code>: used for azimuth classification</li>
+<li>
+<code>hier_scpred.RDS</code>: hierarchical trained model for scPred classification</li>
+</ul>
+<p>To call components within the container, we commonly use the following syntax</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="getting-started.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do not run</span></span>
+<span id="cb1-2"><a href="getting-started.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec cell_classification.sif [COMMAND]</span></code></pre></div>
+<p>However, to make make a given directory visible to the container, we have to use
+the <code>-B</code> flag</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="getting-started.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do not run</span></span>
+<span id="cb2-2"><a href="getting-started.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif [COMMAND]</span></code></pre></div>
+<p>The previous command will allow the current directory to be visible.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="general.html"><span class="header-section-number">2</span> General</a></div>
+<div class="next"><a href="split-data.html"><span class="header-section-number">4</span> Split data</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#getting-started"><span class="header-section-number">3</span> Getting started</a></li>
+<li><a class="nav-link" href="#downloading-singularity-image"><span class="header-section-number">3.1</span> Downloading singularity image</a></li>
+<li><a class="nav-link" href="#cell-type-classification-workflow"><span class="header-section-number">3.2</span> Cell type classification workflow</a></li>
+<li><a class="nav-link" href="#singularity-image-components"><span class="header-section-number">3.3</span> Singularity image components</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs/blob/master/03-getting_started.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/powellgenomicslab/WG2-pipeline-classification-docs/edit/master/03-getting_started.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
