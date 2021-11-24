@@ -35,7 +35,7 @@ Let's examine the parameter information:
 
 ```bash
 singularity exec -B $PWD cell_classification.sif \ 
-  Rscript split.R --help
+  Rscript /split.R --help
 ```
 
 

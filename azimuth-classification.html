@@ -108,7 +108,7 @@ we already created.</p>
 <span id="cb10-2"><a href="azimuth-classification.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
 <span id="cb10-3"><a href="azimuth-classification.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">out=$(</span><span class="bu">echo</span> <span class="va">$i</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'gsub(".RDS", "")'</span><span class="va">)</span> <span class="co"># Use same base filename as output</span></span>
 <span id="cb10-4"><a href="azimuth-classification.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">singularity</span> run <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
-<span id="cb10-5"><a href="azimuth-classification.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> mapazimuth.R <span class="dt">\</span></span>
+<span id="cb10-5"><a href="azimuth-classification.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /mapazimuth.R <span class="dt">\</span></span>
 <span id="cb10-6"><a href="azimuth-classification.html#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> step1_split/<span class="va">${i}</span> <span class="dt">\</span></span>
 <span id="cb10-7"><a href="azimuth-classification.html#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> step2_azimuth <span class="dt">\</span></span>
 <span id="cb10-8"><a href="azimuth-classification.html#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${out}</span></span>
@@ -174,7 +174,7 @@ classify multiple Seurat objects (75 pools) from the OneK1K dataset.</p>
 <span id="cb11-29"><a href="azimuth-classification.html#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-30"><a href="azimuth-classification.html#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Run main command</span></span>
 <span id="cb11-31"><a href="azimuth-classification.html#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$SGE_O_WORKDIR</span> bin/cell_classification.sif <span class="dt">\</span></span>
-<span id="cb11-32"><a href="azimuth-classification.html#cb11-32" aria-hidden="true" tabindex="-1"></a>  Rscript map_azimuth.R <span class="dt">\</span></span>
+<span id="cb11-32"><a href="azimuth-classification.html#cb11-32" aria-hidden="true" tabindex="-1"></a>  Rscript /map_azimuth.R <span class="dt">\</span></span>
 <span id="cb11-33"><a href="azimuth-classification.html#cb11-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> <span class="va">${input}</span>/<span class="va">${filename}</span>.RDS <span class="dt">\</span></span>
 <span id="cb11-34"><a href="azimuth-classification.html#cb11-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${filename}</span>_out</span>
 <span id="cb11-35"><a href="azimuth-classification.html#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="ex">--path</span> <span class="va">${output}</span></span></code></pre></div>

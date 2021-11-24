@@ -95,7 +95,7 @@ with cells classified with azimuth and hierarchical scPred. We can generate
 a heatmap showing the counts and proportion of cell type concordance between the
 two methods as well as a text file with the numeric results as follows:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="compare-classifications.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
-<span id="cb25-2"><a href="compare-classifications.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> compare.R <span class="dt">\</span></span>
+<span id="cb25-2"><a href="compare-classifications.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /compare.R <span class="dt">\</span></span>
 <span id="cb25-3"><a href="compare-classifications.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> step4_aggregate/query.RDS <span class="dt">\</span></span>
 <span id="cb25-4"><a href="compare-classifications.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> comparison <span class="dt">\</span></span>
 <span id="cb25-5"><a href="compare-classifications.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> step5_compare</span></code></pre></div>

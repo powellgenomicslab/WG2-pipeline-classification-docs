@@ -86,7 +86,7 @@ this section can be skipped.</p>
 called <code>pool</code> containing the values <code>1</code> and <code>2</code> corresponding to two independent pools. We can split the data by pool using the <code>split.R</code> module.</p>
 <p>Let’s examine the parameter information:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="split-data.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
-<span id="cb4-2"><a href="split-data.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> split.R <span class="at">--help</span></span></code></pre></div>
+<span id="cb4-2"><a href="split-data.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /split.R <span class="at">--help</span></span></code></pre></div>
 <pre><code>Usage: split.R [options]
 
 

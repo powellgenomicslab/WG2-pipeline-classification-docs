@@ -70,7 +70,7 @@ the data can be merged into a single Seurat object using the <code>reduce.R</cod
 multiple <code>.RDS</code> files corresponding to different batches. We can
 merge all Seurat objects follows:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="merge-data.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
-<span id="cb21-2"><a href="merge-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a>            <span class="ex">Rscript</span> reduce.R <span class="dt">\</span></span>
+<span id="cb21-2"><a href="merge-data.html#cb21-2" aria-hidden="true" tabindex="-1"></a>            <span class="ex">Rscript</span> /reduce.R <span class="dt">\</span></span>
 <span id="cb21-3"><a href="merge-data.html#cb21-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">--file</span> step3_hierscpred <span class="dt">\</span></span>
 <span id="cb21-4"><a href="merge-data.html#cb21-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">--out</span> reduced_data <span class="dt">\</span></span>
 <span id="cb21-5"><a href="merge-data.html#cb21-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">--path</span> step4_reduce</span></code></pre></div>

@@ -75,7 +75,7 @@ use the output Seurat `.RDS` files as as input for *hierchical scPred* as follow
 for i in $(ls step2_azimuth | grep ".RDS");
 do
   out=$(echo $i | awk 'gsub(".RDS", "")')
-  Rscript map_hierscpred.R --file step2_azimuth/${i} --path step3_hierscpred --out ${out}
+  Rscript /map_hierscpred.R --file step2_azimuth/${i} --path step3_hierscpred --out ${out}
 done
 ```
 

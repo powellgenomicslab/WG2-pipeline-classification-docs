@@ -55,7 +55,7 @@ two methods as well as a text file with the numeric results as follows:
 
 ```bash
 singularity exec -B $PWD cell_classification.sif \ 
-  Rscript compare.R \
+  Rscript /compare.R \
   --file step4_aggregate/query.RDS \
   --out comparison \
   --path step5_compare

@@ -26,7 +26,7 @@ merge all Seurat objects follows:
 
 ```bash
 singularity exec -B $PWD cell_classification.sif \ 
-            Rscript reduce.R \
+            Rscript /reduce.R \
             --file step3_hierscpred \
             --out reduced_data \
             --path step4_reduce

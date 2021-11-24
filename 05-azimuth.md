@@ -69,7 +69,7 @@ for i in $(ls step1_split);
 do
   out=$(echo $i | awk 'gsub(".RDS", "")') # Use same base filename as output
   singularity run -B $PWD cell_classification.sif \ 
-  Rscript mapazimuth.R \
+  Rscript /mapazimuth.R \
   --file step1_split/${i} \
   --path step2_azimuth \
   --out ${out}
@@ -136,7 +136,7 @@ echo "Classifying: $filename"
 
 # Run main command
 singularity exec -B $SGE_O_WORKDIR bin/cell_classification.sif \
-  Rscript map_azimuth.R \
+  Rscript /map_azimuth.R \
   --file ${input}/${filename}.RDS \
   --out ${filename}_out
   --path ${output}
