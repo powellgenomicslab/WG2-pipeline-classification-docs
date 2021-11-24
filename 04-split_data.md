@@ -66,7 +66,7 @@ We can now split the data as follows
 
 ```bash
 singularity exec -B $PWD cell_classification.sif \
-  Rscript split.R \
+  Rscript /split.R \
   --file query.RDS \
   --batch pool \
   --out query \

@@ -65,7 +65,7 @@ the data can be merged into a single Seurat object using the <code>reduce.R</cod
 <div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="merge-data.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> step4_reduce</span></code></pre></div>
 <p>And check the input arguments</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="merge-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span> </span>
-<span id="cb20-2"><a href="merge-data.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> reduce.R <span class="at">--help</span></span></code></pre></div>
+<span id="cb20-2"><a href="merge-data.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /reduce.R <span class="at">--help</span></span></code></pre></div>
 <p>Let’s assume we have a directory called <code>step3_hierscpred</code> containing
 multiple <code>.RDS</code> files corresponding to different batches. We can
 merge all Seurat objects follows:</p>
@@ -100,7 +100,7 @@ merge all Seurat objects follows:</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-21.</p>
+    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

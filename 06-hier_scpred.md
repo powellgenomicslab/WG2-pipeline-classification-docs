@@ -15,7 +15,7 @@ And check the input arguments
 
 ```bash
 singularity exec -B $PWD cell_classification.sif \ 
-  Rscript map_hierscpred.R --help
+  Rscript /map_hierscpred.R --help
 ```
 
 ```

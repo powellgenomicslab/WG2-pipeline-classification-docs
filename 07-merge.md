@@ -15,7 +15,7 @@ And check the input arguments
 
 ```bash
 singularity exec -B $PWD cell_classification.sif \  
-  Rscript reduce.R --help
+  Rscript /reduce.R --help
 ```
 
 
