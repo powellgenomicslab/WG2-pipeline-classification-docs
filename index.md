@@ -21,9 +21,18 @@ eQTLGen consortium](https://eqtlgen.org/sc/).
 Source code for this project can be
 accessed from https://github.com/sc-eQTLgen-consortium/WG2-pipeline-classification.
 
+
+
+
+Current version state of singularity image when generating this documentation is on commit [81310e5](https://github.com/sc-eQTLgen-consortium/WG2-pipeline-classification/tree/81310e5f317abe2eb9af8ddb9e9aec3ac44ead2c)
+
 For any inquiries please contact:
 
 - Jose Alquicira Hernandez (j.alquicira@garvan.org.au)
 - Lieke Michelsen (L.C.M.Michielsen@tudelft.nl)
+
+
+
+
 
 
