@@ -161,8 +161,8 @@ classify multiple Seurat objects (75 pools) from the OneK1K dataset.</p>
 <span id="cb17-31"><a href="hierarchical-scpred-classification.html#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$SGE_O_WORKDIR</span> bin/cell_classification.sif <span class="dt">\</span></span>
 <span id="cb17-32"><a href="hierarchical-scpred-classification.html#cb17-32" aria-hidden="true" tabindex="-1"></a>  Rscript /map_hierscpred.R <span class="dt">\</span></span>
 <span id="cb17-33"><a href="hierarchical-scpred-classification.html#cb17-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> <span class="va">${input}</span>/<span class="va">${filename}</span>.RDS <span class="dt">\</span></span>
-<span id="cb17-34"><a href="hierarchical-scpred-classification.html#cb17-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${filename}</span>_out</span>
-<span id="cb17-35"><a href="hierarchical-scpred-classification.html#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="ex">--path</span> <span class="va">${output}</span></span></code></pre></div>
+<span id="cb17-34"><a href="hierarchical-scpred-classification.html#cb17-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${filename}</span>_out <span class="dt">\</span></span>
+<span id="cb17-35"><a href="hierarchical-scpred-classification.html#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> <span class="va">${output}</span></span></code></pre></div>
 <p>If we save the previous code into a file (e.g. <code>run_hierscpred.sh</code>), we can launch
 an array job iterating for each pool name</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="hierarchical-scpred-classification.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qsub</span> <span class="at">-t</span> 1-75 bin/run_hierscpred.sh</span>

@@ -113,7 +113,7 @@ Options:
 <span id="cb6-4"><a href="split-data.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--batch</span> pool <span class="dt">\</span></span>
 <span id="cb6-5"><a href="split-data.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> query <span class="dt">\</span></span>
 <span id="cb6-6"><a href="split-data.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> step1_split</span></code></pre></div>
-<p><strong><code>split_object.R</code></strong> takes two main arguments. <code>--file</code> corresponds to the seurat object
+<p><strong><code>split.R</code></strong> takes two main arguments. <code>--file</code> corresponds to the seurat object
 filename in <code>.RDS</code> format. <code>--batch</code> expects a string corresponding to a column name
 in the <code>@metadata</code> slot. A group of RDS files following the *{out}_{batch levels}.RDS*
 filename pattern are created. In this example, two files called <code>query_1.RDS</code> and <code>query_2.RDS</code>

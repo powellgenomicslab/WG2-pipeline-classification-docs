@@ -128,6 +128,9 @@ the <code>-B</code> flag</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="getting-started.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># do not run</span></span>
 <span id="cb2-2"><a href="getting-started.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif [COMMAND]</span></code></pre></div>
 <p>The previous command will allow the current directory to be visible.</p>
+<p>If multiple paths are needed to be visible (e.g. input and output directories
+not contained in the currect directory), please see</p>
+<p><a href="https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html" class="uri">https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html</a></p>
 
 </div>
 </div>

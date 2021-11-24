@@ -29,7 +29,7 @@ Current version state of singularity image when generating this documentation is
 For any inquiries please contact:
 
 - Jose Alquicira Hernandez (j.alquicira@garvan.org.au)
-- Lieke Michelsen (L.C.M.Michielsen@tudelft.nl)
+- Lieke Michielsen (L.C.M.Michielsen@tudelft.nl)
 
 
 

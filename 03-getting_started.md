@@ -68,3 +68,15 @@ singularity exec -B $PWD cell_classification.sif [COMMAND]
 ```
 
 The previous command will allow the current directory to be visible.
+
+If multiple paths are needed to be visible (e.g. input and output directories 
+not contained in the currect directory), please see 
+
+https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html
+
+
+
+
+
+
+

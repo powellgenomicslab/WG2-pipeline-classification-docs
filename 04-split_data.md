@@ -74,7 +74,7 @@ singularity exec -B $PWD cell_classification.sif \
 ```
 
 
-**`split_object.R`** takes two main arguments. `--file` corresponds to the seurat object 
+**`split.R`** takes two main arguments. `--file` corresponds to the seurat object 
 filename in `.RDS` format. `--batch` expects a string corresponding to a column name 
 in the `@metadata` slot. A group of RDS files following the *{out}_{batch levels}.RDS* 
 filename pattern are created. In this example, two files called `query_1.RDS` and `query_2.RDS` 

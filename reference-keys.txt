@@ -11,3 +11,4 @@ hierarchical-scpred-classification
 parallelize-classification-sge-example-1
 merge-data
 compare-classifications
+cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

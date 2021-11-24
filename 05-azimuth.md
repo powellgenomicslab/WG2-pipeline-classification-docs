@@ -138,7 +138,7 @@ echo "Classifying: $filename"
 singularity exec -B $SGE_O_WORKDIR bin/cell_classification.sif \
   Rscript /map_azimuth.R \
   --file ${input}/${filename}.RDS \
-  --out ${filename}_out
+  --out ${filename}_out \
   --path ${output}
 ```
 
