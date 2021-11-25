@@ -1,7 +1,13 @@
 # Hierarchical scPred classification
 
 Cell type classification using the **Hierarchical scPred** method can be performed using the 
-`map_hierscpred.R` module.. 
+`map_hierscpred.R` module. 
+
+> Note: If both azimuth and hierarchical are used for cell type annotation, please
+> use the output RDS files generated with `map_azimuth.R` as the input for `map_hierscpred.R`
+> (or viceversa) to guarantee classification labels are appended to the same files and
+> no Seurat object is unnecessarily duplicated. This is also a requirement for
+> the remaining part of the pipeline
 
 Let's create an output directory to store the results.
 
@@ -85,7 +91,9 @@ including:
 -   Cell type classification (`scpred_prediction`) as a column in the metadata
 
 
-## Parallelize classification: SGE example
+## Parallelize classification 
+
+### SGE example
 
 The following array job code in SGE (Sun Grid Engine) can be used as a guide to 
 classify each pool in individual jobs. This code snippet was used to
@@ -139,3 +147,58 @@ qsub -t 1-75 bin/run_hierscpred.sh
 # -t Vector of length equal to the number of pools (.RDS files)
 ```
 
+### SLURM
+
+Likewise, we can run the same code using a SLURM scheduler as follows:
+
+
+```bash
+#!/bin/bash
+#SBATCH -J hierscpred
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --time=1:00:00 
+#SBATCH --mem=10GB
+#SBATCH --error=job.%J.err
+#SBATCH --output=job.%J.out
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=l.c.m.michielsen@lumc.nl
+
+# Clear the environment from any previously loaded modules
+module purge 
+module add container/singularity/3.7.3/gcc.8.3.1
+
+# Set environmental variables
+input=DataGroningen/output_Azimuth
+output=DataGroningen/output_HierscPred
+
+# Get job info
+echo "Starting at `date`"
+echo "JOB: $SLURM_JOB_ID TASK: $SLURM_ARRAY_TASK_ID"
+
+# Get basefile name
+files=($(ls ${input} | grep ".RDS"))
+i="$SLURM_ARRAY_TASK_ID"
+
+filename=${files[$i]}
+filename=$(echo $filename | sed 's/.RDS//')
+
+echo "Classifying: $filename"
+
+# Run main command
+singularity exec -B $PWD cell_classification.sif \
+  Rscript /map_hierscpred.R \
+  --file ${input}/${filename}.RDS \
+  --out ${filename}_out \
+  --path ${output}
+```
+
+
+If we save the previous code into a file (e.g. `run_hierscpred.sbatch`), we can launch 
+an array job iterating for each batch
+
+
+```bash
+sbatch -a 0-30 run_hierscpred.sbatch
+# -a Vector of length equal to the number .RDS files
+```

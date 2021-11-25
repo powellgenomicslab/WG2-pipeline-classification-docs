@@ -62,10 +62,10 @@
 <p>If two methods are used to classify cells (e.g. <em>azimuth</em> and <em>hierarchical scPred</em>),
 we can plot a contingeny table showing the concordance by cell type between the two methods.</p>
 <p>Let’s create an output directory</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="compare-classifications.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> step5_compare</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="compare-classifications.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> step5_compare</span></code></pre></div>
 <p>And check the input arguments</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="compare-classifications.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span> </span>
-<span id="cb23-2"><a href="compare-classifications.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /compare.R <span class="at">--help</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="compare-classifications.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span> </span>
+<span id="cb27-2"><a href="compare-classifications.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /compare.R <span class="at">--help</span></span></code></pre></div>
 <pre><code>Usage: compare.R [options]
 
 
@@ -94,11 +94,11 @@ Options:
 with cells classified with azimuth and hierarchical scPred. We can generate
 a heatmap showing the counts and proportion of cell type concordance between the
 two methods as well as a text file with the numeric results as follows:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="compare-classifications.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
-<span id="cb25-2"><a href="compare-classifications.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /compare.R <span class="dt">\</span></span>
-<span id="cb25-3"><a href="compare-classifications.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> step4_aggregate/query.RDS <span class="dt">\</span></span>
-<span id="cb25-4"><a href="compare-classifications.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> comparison <span class="dt">\</span></span>
-<span id="cb25-5"><a href="compare-classifications.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> step5_compare</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="compare-classifications.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
+<span id="cb29-2"><a href="compare-classifications.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /compare.R <span class="dt">\</span></span>
+<span id="cb29-3"><a href="compare-classifications.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> step4_aggregate/query.RDS <span class="dt">\</span></span>
+<span id="cb29-4"><a href="compare-classifications.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> comparison <span class="dt">\</span></span>
+<span id="cb29-5"><a href="compare-classifications.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> step5_compare</span></code></pre></div>
 <p><code>compare.R</code> will output two heatmap plots corresponding to counts and proportion
 of cell type concordance between the two methods stored in the <code>step5_compare</code>
 directory.</p>
@@ -126,7 +126,7 @@ directory.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-24.</p>
+    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

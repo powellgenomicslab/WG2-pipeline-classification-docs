@@ -6,9 +6,13 @@ cell-type-classification-workflow
 singularity-image-components
 split-data
 azimuth-classification
-parallelize-classification-sge-example
+parallelize-classification
+sge-example
+slurm-example
 hierarchical-scpred-classification
-parallelize-classification-sge-example-1
+parallelize-classification-1
+sge-example-1
+slurm
 merge-data
 compare-classifications
 cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

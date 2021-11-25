@@ -1,7 +1,7 @@
 --- 
 title: "WG2: Cell-type classification"
 author: "Jose Alquicira Hernandez and Lieke Michelsen"
-date: "2021-11-24"
+date: "2021-11-25"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -24,7 +24,7 @@ accessed from https://github.com/sc-eQTLgen-consortium/WG2-pipeline-classificati
 
 
 
-Current version state of singularity image when generating this documentation is on commit [81310e5](https://github.com/sc-eQTLgen-consortium/WG2-pipeline-classification/tree/81310e5f317abe2eb9af8ddb9e9aec3ac44ead2c)
+Current version state of singularity image when generating this documentation is on commit [9ae2a75](https://github.com/sc-eQTLgen-consortium/WG2-pipeline-classification/tree/9ae2a7565da81fec9c2f791ca1cb4dd291412969)
 
 For any inquiries please contact:
 

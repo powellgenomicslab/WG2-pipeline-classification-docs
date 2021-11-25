@@ -57,8 +57,7 @@ Options:
 ```
 
 Further data splitting and classification can be performed within `map_azimuth.R` 
-via the `future` package, however, we'll classify cells for each of the partitions 
-we already created. 
+however, we'll classify cells for each of the partitions we already created. 
 
 
 We can classify each batch within a loop using `map_azimuth.R` as follows:
@@ -97,7 +96,9 @@ as outputs for exploratory data analysis.
 
 ![Query dataset projected onto the reference UMAP](_bookdown_files/umap.png){width=100%}
 
-## Parallelize classification: SGE example
+## Parallelize classification
+
+## SGE example
 
 The following array job code in SGE (Sun Grid Engine) can be used as a guide to 
 classify each pool in individual jobs. This code snippet was used to
@@ -142,7 +143,7 @@ singularity exec -B $SGE_O_WORKDIR bin/cell_classification.sif \
   --path ${output}
 ```
 
-If we save the previous code into a file (e.g. `run_azimuth.R`), we can launch 
+If we save the previous code into a file (e.g. `run_azimuth.sh`), we can launch 
 an array job iterating for each pool name
 
 
@@ -151,3 +152,58 @@ qsub -t 1-75 bin/run_azimuth.sh
 # -t Vector of length equal to the number of pools (.RDS files)
 ```
 
+## SLURM example
+
+Likewise, we can run the same code using a SLURM scheduler as follows:
+
+
+```bash
+#!/bin/bash
+#SBATCH -J azimuth
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --time=0:30:00 
+#SBATCH --mem=40GB
+#SBATCH --error=job.%J.err
+#SBATCH --output=job.%J.out
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=l.c.m.michielsen@lumc.nl
+
+# Clear the environment from any previously loaded modules
+module purge 
+module add container/singularity/3.7.3/gcc.8.3.1
+
+# Set environmental variables
+input=DataGroningen/step1_split
+output=DataGroningen/output_Azimuth
+
+# Get job info
+echo "Starting at `date`"
+echo "JOB: $SLURM_JOB_ID TASK: $SLURM_ARRAY_TASK_ID"
+
+# Get basefile name
+files=($(ls ${input} | grep ".RDS"))
+i="$SLURM_ARRAY_TASK_ID"
+
+filename=${files[$i]}
+filename=$(echo $filename | sed 's/.RDS//')
+
+echo "Classifying: $filename"
+
+# Run main command
+singularity exec -B $PWD cell_classification.sif \
+  Rscript /map_azimuth.R \
+  --file ${input}/${filename}.RDS \
+  --batch lane \
+  --out ${filename}_out \
+  --path ${output}
+```
+
+If we save the previous code into a file (e.g. `run_azimuth.sbatch`), we can launch 
+an array job iterating for each batch
+
+
+```bash
+sbatch -a 0-30 run_azimuth.sbatch
+# -a Vector of length equal to the number .RDS files
+```

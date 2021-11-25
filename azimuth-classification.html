@@ -101,8 +101,7 @@ Options:
         -h, --help
                 Show this help message and exit</code></pre>
 <p>Further data splitting and classification can be performed within <code>map_azimuth.R</code>
-via the <code>future</code> package, however, we’ll classify cells for each of the partitions
-we already created.</p>
+however, we’ll classify cells for each of the partitions we already created.</p>
 <p>We can classify each batch within a loop using <code>map_azimuth.R</code> as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="azimuth-classification.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">$(</span><span class="fu">ls</span> step1_split<span class="va">)</span><span class="kw">;</span></span>
 <span id="cb10-2"><a href="azimuth-classification.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
@@ -136,9 +135,14 @@ as outputs for exploratory data analysis.</p>
 <div class="figure">
 <img src="_bookdown_files/umap.png" style="width:100.0%" alt=""><p class="caption">Query dataset projected onto the reference UMAP</p>
 </div>
-<div id="parallelize-classification-sge-example" class="section level2" number="5.1">
+<div id="parallelize-classification" class="section level2" number="5.1">
 <h2>
-<span class="header-section-number">5.1</span> Parallelize classification: SGE example<a class="anchor" aria-label="anchor" href="#parallelize-classification-sge-example"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> Parallelize classification<a class="anchor" aria-label="anchor" href="#parallelize-classification"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="sge-example" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> SGE example<a class="anchor" aria-label="anchor" href="#sge-example"><i class="fas fa-link"></i></a>
 </h2>
 <p>The following array job code in SGE (Sun Grid Engine) can be used as a guide to
 classify each pool in individual jobs. This code snippet was used to
@@ -178,10 +182,59 @@ classify multiple Seurat objects (75 pools) from the OneK1K dataset.</p>
 <span id="cb11-33"><a href="azimuth-classification.html#cb11-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> <span class="va">${input}</span>/<span class="va">${filename}</span>.RDS <span class="dt">\</span></span>
 <span id="cb11-34"><a href="azimuth-classification.html#cb11-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${filename}</span>_out <span class="dt">\</span></span>
 <span id="cb11-35"><a href="azimuth-classification.html#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> <span class="va">${output}</span></span></code></pre></div>
-<p>If we save the previous code into a file (e.g. <code>run_azimuth.R</code>), we can launch
+<p>If we save the previous code into a file (e.g. <code>run_azimuth.sh</code>), we can launch
 an array job iterating for each pool name</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="azimuth-classification.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qsub</span> <span class="at">-t</span> 1-75 bin/run_azimuth.sh</span>
 <span id="cb12-2"><a href="azimuth-classification.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -t Vector of length equal to the number of pools (.RDS files)</span></span></code></pre></div>
+</div>
+<div id="slurm-example" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> SLURM example<a class="anchor" aria-label="anchor" href="#slurm-example"><i class="fas fa-link"></i></a>
+</h2>
+<p>Likewise, we can run the same code using a SLURM scheduler as follows:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="azimuth-classification.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb13-2"><a href="azimuth-classification.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -J azimuth</span></span>
+<span id="cb13-3"><a href="azimuth-classification.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -N 1</span></span>
+<span id="cb13-4"><a href="azimuth-classification.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH -n 1</span></span>
+<span id="cb13-5"><a href="azimuth-classification.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=0:30:00 </span></span>
+<span id="cb13-6"><a href="azimuth-classification.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=40GB</span></span>
+<span id="cb13-7"><a href="azimuth-classification.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=job.%J.err</span></span>
+<span id="cb13-8"><a href="azimuth-classification.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=job.%J.out</span></span>
+<span id="cb13-9"><a href="azimuth-classification.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=</span><span class="re">END</span><span class="co">,FAIL</span></span>
+<span id="cb13-10"><a href="azimuth-classification.html#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=l.c.m.michielsen@lumc.nl</span></span>
+<span id="cb13-11"><a href="azimuth-classification.html#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="azimuth-classification.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear the environment from any previously loaded modules</span></span>
+<span id="cb13-13"><a href="azimuth-classification.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge </span>
+<span id="cb13-14"><a href="azimuth-classification.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> add container/singularity/3.7.3/gcc.8.3.1</span>
+<span id="cb13-15"><a href="azimuth-classification.html#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="azimuth-classification.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Set environmental variables</span></span>
+<span id="cb13-17"><a href="azimuth-classification.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="va">input=</span>DataGroningen/step1_split</span>
+<span id="cb13-18"><a href="azimuth-classification.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="va">output=</span>DataGroningen/output_Azimuth</span>
+<span id="cb13-19"><a href="azimuth-classification.html#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="azimuth-classification.html#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Get job info</span></span>
+<span id="cb13-21"><a href="azimuth-classification.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Starting at </span><span class="kw">`</span><span class="fu">date</span><span class="kw">`</span><span class="st">"</span></span>
+<span id="cb13-22"><a href="azimuth-classification.html#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"JOB: </span><span class="va">$SLURM_JOB_ID</span><span class="st"> TASK: </span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">"</span></span>
+<span id="cb13-23"><a href="azimuth-classification.html#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="azimuth-classification.html#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basefile name</span></span>
+<span id="cb13-25"><a href="azimuth-classification.html#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="va">files=($(</span><span class="fu">ls</span> <span class="va">${input}</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">))</span></span>
+<span id="cb13-26"><a href="azimuth-classification.html#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="va">i=</span><span class="st">"</span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">"</span></span>
+<span id="cb13-27"><a href="azimuth-classification.html#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="azimuth-classification.html#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="va">filename=${files</span><span class="op">[</span><span class="va">$i</span><span class="op">]</span><span class="va">}</span></span>
+<span id="cb13-29"><a href="azimuth-classification.html#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="va">filename=$(</span><span class="bu">echo</span> <span class="va">$filename</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/.RDS//'</span><span class="va">)</span></span>
+<span id="cb13-30"><a href="azimuth-classification.html#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="azimuth-classification.html#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Classifying: </span><span class="va">$filename</span><span class="st">"</span></span>
+<span id="cb13-32"><a href="azimuth-classification.html#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-33"><a href="azimuth-classification.html#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Run main command</span></span>
+<span id="cb13-34"><a href="azimuth-classification.html#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="ex">singularity</span> exec <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\</span></span>
+<span id="cb13-35"><a href="azimuth-classification.html#cb13-35" aria-hidden="true" tabindex="-1"></a>  Rscript /map_azimuth.R <span class="dt">\</span></span>
+<span id="cb13-36"><a href="azimuth-classification.html#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> <span class="va">${input}</span>/<span class="va">${filename}</span>.RDS <span class="dt">\</span></span>
+<span id="cb13-37"><a href="azimuth-classification.html#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">--batch</span> lane <span class="dt">\</span></span>
+<span id="cb13-38"><a href="azimuth-classification.html#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${filename}</span>_out <span class="dt">\</span></span>
+<span id="cb13-39"><a href="azimuth-classification.html#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> <span class="va">${output}</span></span></code></pre></div>
+<p>If we save the previous code into a file (e.g. <code>run_azimuth.sbatch</code>), we can launch
+an array job iterating for each batch</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="azimuth-classification.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> <span class="at">-a</span> 0-30 run_azimuth.sbatch</span>
+<span id="cb14-2"><a href="azimuth-classification.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -a Vector of length equal to the number .RDS files</span></span></code></pre></div>
 
 </div>
 </div>
@@ -192,7 +245,9 @@ an array job iterating for each pool name</p>
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#azimuth-classification"><span class="header-section-number">5</span> Azimuth classification</a></li>
-<li><a class="nav-link" href="#parallelize-classification-sge-example"><span class="header-section-number">5.1</span> Parallelize classification: SGE example</a></li>
+<li><a class="nav-link" href="#parallelize-classification"><span class="header-section-number">5.1</span> Parallelize classification</a></li>
+<li><a class="nav-link" href="#sge-example"><span class="header-section-number">5.2</span> SGE example</a></li>
+<li><a class="nav-link" href="#slurm-example"><span class="header-section-number">5.3</span> SLURM example</a></li>
 </ul>
 
       <div class="book-extra">
@@ -210,7 +265,7 @@ an array job iterating for each pool name</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-24.</p>
+    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
