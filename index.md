@@ -1,7 +1,7 @@
 --- 
 title: "WG2: Cell-type classification"
 author: "Jose Alquicira Hernandez and Lieke Michelsen"
-date: "2021-11-25"
+date: "2022-06-14"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

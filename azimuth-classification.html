@@ -102,12 +102,20 @@ Options:
                 Show this help message and exit</code></pre>
 <p>Further data splitting and classification can be performed within <code>map_azimuth.R</code>
 however, we’ll classify cells for each of the partitions we already created.</p>
+<blockquote>
+<p>Although the <code>batch</code> parameter is provided as an option to perform cell type
+classification within <code>map_azimuth.R</code>, we encourage users to previously split their data by batch using <code>split.R</code> and run sequential or parallel jobs for each batch as
+shown below to reduce RAM memory usage and reduce computation time</p>
+</blockquote>
+<blockquote>
+<p>If <code>batch</code> is used, the <code>future.globals.maxSize</code> parameter from the <code>future</code> package can be manually changed via the <code>--mem</code> argument when running <code>map_azimuth.R</code>. By default, this value is set to infinity to allow complete use of the allocated memory for each CPU. However, users may experience issues depending on the computing infrastructure. This value therefore can be changed in these cirmunstances. The <code>--mem</code> value must be in Gb.</p>
+</blockquote>
 <p>We can classify each batch within a loop using <code>map_azimuth.R</code> as follows:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="azimuth-classification.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">$(</span><span class="fu">ls</span> step1_split<span class="va">)</span><span class="kw">;</span></span>
 <span id="cb10-2"><a href="azimuth-classification.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
-<span id="cb10-3"><a href="azimuth-classification.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">out=$(</span><span class="bu">echo</span> <span class="va">$i</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'gsub(".RDS", "")'</span><span class="va">)</span> <span class="co"># Use same base filename as output</span></span>
+<span id="cb10-3"><a href="azimuth-classification.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">out</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="va">$i</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'gsub(".RDS", "")'</span><span class="va">)</span> <span class="co"># Use same base filename as output</span></span>
 <span id="cb10-4"><a href="azimuth-classification.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">singularity</span> run <span class="at">-B</span> <span class="va">$PWD</span> cell_classification.sif <span class="dt">\ </span></span>
-<span id="cb10-5"><a href="azimuth-classification.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /mapazimuth.R <span class="dt">\</span></span>
+<span id="cb10-5"><a href="azimuth-classification.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Rscript</span> /map_azimuth.R <span class="dt">\</span></span>
 <span id="cb10-6"><a href="azimuth-classification.html#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--file</span> step1_split/<span class="va">${i}</span> <span class="dt">\</span></span>
 <span id="cb10-7"><a href="azimuth-classification.html#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--path</span> step2_azimuth <span class="dt">\</span></span>
 <span id="cb10-8"><a href="azimuth-classification.html#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> <span class="va">${out}</span></span>
@@ -161,18 +169,18 @@ classify multiple Seurat objects (75 pools) from the OneK1K dataset.</p>
 <span id="cb11-12"><a href="azimuth-classification.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$SGE_O_WORKDIR</span></span>
 <span id="cb11-13"><a href="azimuth-classification.html#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-14"><a href="azimuth-classification.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Set environmental variables</span></span>
-<span id="cb11-15"><a href="azimuth-classification.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="va">input=</span>results/2021-10-28_pools</span>
-<span id="cb11-16"><a href="azimuth-classification.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="va">output=</span>results/2021-10-28_cell_type_annotation</span>
+<span id="cb11-15"><a href="azimuth-classification.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="va">input</span><span class="op">=</span>results/2021-10-28_pools</span>
+<span id="cb11-16"><a href="azimuth-classification.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="va">output</span><span class="op">=</span>results/2021-10-28_cell_type_annotation</span>
 <span id="cb11-17"><a href="azimuth-classification.html#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-18"><a href="azimuth-classification.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Get job info</span></span>
 <span id="cb11-19"><a href="azimuth-classification.html#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"JOB: </span><span class="va">$JOB_ID</span><span class="st"> TASK: </span><span class="va">$SGE_TASK_ID</span><span class="st"> HOSTNAME: </span><span class="va">$HOSTNAME</span><span class="st">"</span></span>
 <span id="cb11-20"><a href="azimuth-classification.html#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-21"><a href="azimuth-classification.html#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basefile name</span></span>
-<span id="cb11-22"><a href="azimuth-classification.html#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="va">files=($(</span><span class="fu">ls</span> <span class="va">${input}</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">))</span></span>
-<span id="cb11-23"><a href="azimuth-classification.html#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="va">i=</span><span class="st">"</span><span class="va">$(($SGE_TASK_ID</span><span class="op">-</span><span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
+<span id="cb11-22"><a href="azimuth-classification.html#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="va">files</span><span class="op">=</span><span class="va">($(</span><span class="fu">ls</span> <span class="va">${input}</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">))</span></span>
+<span id="cb11-23"><a href="azimuth-classification.html#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="va">i</span><span class="op">=</span><span class="st">"</span><span class="va">$(($SGE_TASK_ID</span><span class="op">-</span><span class="dv">1</span><span class="va">))</span><span class="st">"</span></span>
 <span id="cb11-24"><a href="azimuth-classification.html#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="azimuth-classification.html#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="va">filename=${files</span><span class="op">[</span><span class="va">$i</span><span class="op">]</span><span class="va">}</span></span>
-<span id="cb11-26"><a href="azimuth-classification.html#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="va">filename=$(</span><span class="bu">echo</span> <span class="va">$filename</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/.RDS//'</span><span class="va">)</span></span>
+<span id="cb11-25"><a href="azimuth-classification.html#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="va">filename</span><span class="op">=</span><span class="va">${files</span><span class="op">[</span><span class="va">$i</span><span class="op">]</span><span class="va">}</span></span>
+<span id="cb11-26"><a href="azimuth-classification.html#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="va">filename</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="va">$filename</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/.RDS//'</span><span class="va">)</span></span>
 <span id="cb11-27"><a href="azimuth-classification.html#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-28"><a href="azimuth-classification.html#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Classifying: </span><span class="va">$filename</span><span class="st">"</span></span>
 <span id="cb11-29"><a href="azimuth-classification.html#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
@@ -208,19 +216,19 @@ an array job iterating for each pool name</p>
 <span id="cb13-14"><a href="azimuth-classification.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> add container/singularity/3.7.3/gcc.8.3.1</span>
 <span id="cb13-15"><a href="azimuth-classification.html#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-16"><a href="azimuth-classification.html#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Set environmental variables</span></span>
-<span id="cb13-17"><a href="azimuth-classification.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="va">input=</span>DataGroningen/step1_split</span>
-<span id="cb13-18"><a href="azimuth-classification.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="va">output=</span>DataGroningen/output_Azimuth</span>
+<span id="cb13-17"><a href="azimuth-classification.html#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="va">input</span><span class="op">=</span>DataGroningen/step1_split</span>
+<span id="cb13-18"><a href="azimuth-classification.html#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="va">output</span><span class="op">=</span>DataGroningen/output_Azimuth</span>
 <span id="cb13-19"><a href="azimuth-classification.html#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-20"><a href="azimuth-classification.html#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Get job info</span></span>
 <span id="cb13-21"><a href="azimuth-classification.html#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Starting at </span><span class="kw">`</span><span class="fu">date</span><span class="kw">`</span><span class="st">"</span></span>
 <span id="cb13-22"><a href="azimuth-classification.html#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"JOB: </span><span class="va">$SLURM_JOB_ID</span><span class="st"> TASK: </span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">"</span></span>
 <span id="cb13-23"><a href="azimuth-classification.html#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-24"><a href="azimuth-classification.html#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basefile name</span></span>
-<span id="cb13-25"><a href="azimuth-classification.html#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="va">files=($(</span><span class="fu">ls</span> <span class="va">${input}</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">))</span></span>
-<span id="cb13-26"><a href="azimuth-classification.html#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="va">i=</span><span class="st">"</span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">"</span></span>
+<span id="cb13-25"><a href="azimuth-classification.html#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="va">files</span><span class="op">=</span><span class="va">($(</span><span class="fu">ls</span> <span class="va">${input}</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">".RDS"</span><span class="va">))</span></span>
+<span id="cb13-26"><a href="azimuth-classification.html#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="va">i</span><span class="op">=</span><span class="st">"</span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="st">"</span></span>
 <span id="cb13-27"><a href="azimuth-classification.html#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-28"><a href="azimuth-classification.html#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="va">filename=${files</span><span class="op">[</span><span class="va">$i</span><span class="op">]</span><span class="va">}</span></span>
-<span id="cb13-29"><a href="azimuth-classification.html#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="va">filename=$(</span><span class="bu">echo</span> <span class="va">$filename</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/.RDS//'</span><span class="va">)</span></span>
+<span id="cb13-28"><a href="azimuth-classification.html#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="va">filename</span><span class="op">=</span><span class="va">${files</span><span class="op">[</span><span class="va">$i</span><span class="op">]</span><span class="va">}</span></span>
+<span id="cb13-29"><a href="azimuth-classification.html#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="va">filename</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="va">$filename</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">'s/.RDS//'</span><span class="va">)</span></span>
 <span id="cb13-30"><a href="azimuth-classification.html#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-31"><a href="azimuth-classification.html#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Classifying: </span><span class="va">$filename</span><span class="st">"</span></span>
 <span id="cb13-32"><a href="azimuth-classification.html#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
@@ -265,7 +273,7 @@ an array job iterating for each batch</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2021-11-25.</p>
+    <p>"<strong>WG2: Cell-type classification</strong>" was written by Jose Alquicira Hernandez and Lieke Michelsen. It was last built on 2022-06-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

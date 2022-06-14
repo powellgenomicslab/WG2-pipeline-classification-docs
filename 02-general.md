@@ -2,7 +2,7 @@
 
 The cell-type annotation framework implemented in this project consists on supervised classification using two approaches:
 
--   **Azimuth**: This method implemented in Seurat V4 classifies by cells by mapping the query dataset onto a supervised PCA space constructed from modal-weighted neighbours calculated by combining RNA and protein data.
+-   **Azimuth**: This method implemented in Seurat V4 classifies by cells by mapping the query dataset onto a supervised PCA space constructed from modal-weighted neighbors calculated by combining RNA and protein data.
 
 -   **Hierarchical scPred:** This approach is based on two methods:
 

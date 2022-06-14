@@ -3,9 +3,10 @@
 ## Downloading singularity image
 
 All core scripts and data necessary to perform cell-type classification are 
-available in a singularity container from:
+available in a singularity container from Dropbox:
 
-Link to dropbox
+https://www.dropbox.com/sh/ekvdocei8r45jxq/AACA17z7PFNbVkeuSavFvjPNa?dl=0
+
 
 ## Cell type classification workflow
 

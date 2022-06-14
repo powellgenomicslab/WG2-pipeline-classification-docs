@@ -15,4 +15,3 @@ sge-example-1
 slurm
 merge-data
 compare-classifications
-cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

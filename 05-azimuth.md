@@ -59,6 +59,12 @@ Options:
 Further data splitting and classification can be performed within `map_azimuth.R` 
 however, we'll classify cells for each of the partitions we already created. 
 
+> Although the `batch` parameter is provided as an option to perform cell type
+classification within `map_azimuth.R`, we encourage users to previously split their data by batch using `split.R` and run sequential or parallel jobs for each batch as
+shown below to reduce RAM memory usage and reduce computation time
+
+> If `batch` is used, the `future.globals.maxSize` parameter from the `future` package can be manually changed via the `--mem` argument when running `map_azimuth.R`. By default, this value is set to infinity to allow complete use of the allocated memory for each CPU. However, users may experience issues depending on the computing infrastructure. This value therefore can be changed in these cirmunstances. The `--mem` value must be in Gb.
+
 
 We can classify each batch within a loop using `map_azimuth.R` as follows:
 
@@ -68,7 +74,7 @@ for i in $(ls step1_split);
 do
   out=$(echo $i | awk 'gsub(".RDS", "")') # Use same base filename as output
   singularity run -B $PWD cell_classification.sif \ 
-  Rscript /mapazimuth.R \
+  Rscript /map_azimuth.R \
   --file step1_split/${i} \
   --path step2_azimuth \
   --out ${out}
