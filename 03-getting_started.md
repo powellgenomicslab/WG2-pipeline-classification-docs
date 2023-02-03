@@ -1,5 +1,9 @@
 # Getting started
 
+## Preparing your own data
+
+The reference dataset we are going to use has Gene IDs as the feature names. If your dataset has another identifier (e.g. ENSG IDs), make sure to replace this with the Gene IDs before proceeding to the next steps.
+
 ## Downloading singularity image
 
 All core scripts and data necessary to perform cell-type classification are 
